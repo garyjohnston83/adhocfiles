@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Spec Check — Headings, Form, Upload Button, Table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    :root{
+      --purple:#662095;    /* your specified “deep purple” */
+      --light-grey:#CCCCCC;
+      --dark-grey:#444444;
+      --black:#000000;
+      --white:#FFFFFF;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 16px;
+      background: #fafafa;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--black);
+    }
+
+    /* Headings become full-width horizontal bars */
+    h1, h2, h3 {
+      display: block;
+      width: 100%;
+      background: var(--light-grey);
+      color: var(--purple);
+      margin: 0 0 12px 0;
+      padding: 5px; /* 5px “margin inside” per your wording */
+      font-weight: 600;
+    }
+    /* “small <h1>” as requested */
+    h1 { font-size: 18px; line-height: 1.2; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 14px; }
+
+    /* Labels (form field names) + table header text */
+    .form-label,
+    table thead th {
+      font-size: 12px;
+      color: var(--dark-grey);
+      font-weight: 600;
+    }
+
+    /* Simple form layout */
+    .field {
+      display: block;
+      margin: 12px 0;
+    }
+    .field select,
+    .field input[type="text"] {
+      display: block;
+      margin-top: 4px;
+      padding: 6px 8px;
+      font-size: 14px;
+      border: 1px solid var(--light-grey);
+      border-radius: 2px;
+      background: #fff;
+      outline: none;
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      border-radius: 2px; /* specifically 2px rounding */
+      padding: 8px 12px;
+      font-size: 14px;
+      line-height: 1;
+      cursor: default; /* no/little interaction */
+      user-select: none;
+    }
+    .btn svg { 
+      width: 16px; 
+      height: 16px; 
+      display: block;
+      flex: 0 0 16px;
+    }
+
+    /* Table container + table look */
+    .table-wrap {
+      background: var(--light-grey); /* light grey table background */
+      padding: 8px;
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: transparent; /* rows will be white; container is light grey */
+    }
+
+    thead th {
+      background: var(--light-grey); /* keep header cells light grey */
+      text-align: left;
+      padding: 8px 10px;
+      border-top: 1px solid var(--light-grey);  /* only top/bottom borders */
+      border-bottom: 1px solid var(--light-grey);
+      border-left: none;
+      border-right: none;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      background: var(--white); /* rows are white */
+      color: var(--black);
+      padding: 8px 10px;
+      border-top: 1px solid var(--light-grey);  /* only top/bottom borders */
+      border-bottom: 1px solid var(--light-grey);
+      border-left: none;
+      border-right: none;
+    }
+
+    /* Simple spacing helpers */
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+	
+	/* Link style override: force blue + underline */
+	a, .link {
+	  color: #0066CC;
+	  text-decoration: underline;
+	}
+	a:hover, .link:hover {
+	  text-decoration: underline; /* keep underline on hover for screenshots */
+	}
+	
+	.scroll-pane {
+      overflow: auto;              /* both horizontal & vertical */
+      max-height: 220px;           /* tall enough to imply vertical scroll with ~4 rows */
+      border-radius: 2px;
+    }
+    /* Make columns wide enough so that only ~8 are visible, forcing horizontal scroll */
+    #scenario-edits-table th,
+    #scenario-edits-table td {
+      min-width: 150px;
+    }
+    /* Firefox */
+    .scroll-pane {
+      scrollbar-width: thin;
+      scrollbar-color: #AD1982 #EEEEEE;
+    }
+    /* WebKit */
+    .scroll-pane::-webkit-scrollbar {
+      height: 10px;
+      width: 10px;
+    }
+    .scroll-pane::-webkit-scrollbar-thumb {
+      background: #AD1982;
+      border-radius: 10px;
+    }
+    .scroll-pane::-webkit-scrollbar-track {
+      background: #EEEEEE;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Scenario Impact Analysis</h2>
+
+  <div class="table-wrap mt-16">
+    <table id="scenario-impact-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:24px;">Scenario Edits</h3>
+
+  <!-- Options row -->
+  <div style="display:flex; align-items:center; gap:24px; margin-top:8px;">
+    <label style="display:inline-flex; align-items:center; gap:8px; color: var(--dark-grey); font-size:12px;">
+      <input type="checkbox" id="cb-rows-only" checked>
+      <span>Show editted rows only</span>
+    </label>
+
+    <label style="display:inline-flex; align-items:center; gap:8px; color: var(--dark-grey); font-size:12px;">
+      <input type="checkbox" id="cb-cols-only">
+      <span>Show editted column only</span>
+    </label>
+  </div>
+
+  <!-- Scrollable table (both directions) -->
+  <div class="table-wrap mt-16">
+    <div class="scroll-pane">
+      <table id="scenario-edits-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3 style="margin-top:24px;">Scenario Impact</h3>
+
+  <!-- Single checkbox row -->
+  <div style="display:flex; align-items:center; gap:24px; margin-top:8px;">
+    <label style="display:inline-flex; align-items:center; gap:8px; color: var(--dark-grey); font-size:12px;">
+      <input type="checkbox" id="cb-impacted-only" checked>
+      <span>Show impacted results only</span>
+    </label>
+  </div>
+
+  <!-- Impact results table -->
+  <div class="table-wrap mt-16">
+    <div class="scroll-pane">
+      <table id="impact-results-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D3 v7 (must be before the script below) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+  <script>
+    /* --------- Top single-row table (summary row) --------- */
+    const impactData = {
+      headers: [
+        "Scenario Id",
+        "Scenario Name",
+        "Created Date",
+        "Created By",
+        "Version",
+        "Status",
+        "Next Actions"
+      ],
+      values: [
+        [1,"SA overrides 17-09-2025","17-09-2025","William Naylor","1","Validated","Button[text='Make Official']"]
+      ]
+    };
+
+    const impactTable = d3.select("#scenario-impact-table");
+    const impactThead = impactTable.select("thead");
+    const impactTbody = impactTable.select("tbody");
+
+    if (impactThead.selectAll("tr").empty()) {
+      impactThead.append("tr")
+        .selectAll("th")
+        .data(impactData.headers)
+        .enter()
+        .append("th")
+        .text(d => d);
+    }
+
+    impactTbody.selectAll("tr")
+      .data(impactData.values)
+      .enter()
+      .append("tr")
+      .selectAll("td")
+      .data(d => d)
+      .enter()
+      .append("td")
+      .each(function(cell) {
+        const td = d3.select(this);
+
+        if (typeof cell === "string" && cell.includes("Button[")) {
+          const matches = [...cell.matchAll(/Button\[text\s*=\s*['"]([^'"]+)['"]\]/gi)];
+          matches.forEach(m => {
+            const btnText = m[1] || "Button";
+            td.append("button")
+              .attr("class", "btn")
+              .style("margin", "0 4px")
+              .text(btnText);
+          });
+          return;
+        }
+
+        if (typeof cell === "string" && cell.startsWith("Link[")) {
+          const lm = cell.match(/Link\[\s*['"]([^'"]+)['"]\s*,\s*['"]([^'"]+)['"]\s*\]/i);
+          if (lm) {
+            let text = lm[1];
+            let href = lm[2];
+            if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(href)) {
+              href = "https://" + href.replace(/^https?:?/i, "").replace(/^\/\//, "");
+            }
+            td.append("a")
+              .attr("class", "link")
+              .attr("href", href)
+              .attr("target", "_blank")
+              .text(text);
+            return;
+          }
+        }
+
+        td.text(cell);
+      });
+
+    /* --------- Scenario Edits scrollable table --------- */
+    const editHeaders = d3.range(1, 17).map(i => `Col${String(i).padStart(2, "0")}`);
+    const editValues = [
+      editHeaders.map((h,i) => i === 2 ? "ZA" : `${h}-R1`),
+      editHeaders.map((h,i) => i === 5 ? "123.45" : `${h}-R2`),
+      editHeaders.map((h,i) => i === 8 ? "N/A" : `${h}-R3`),
+      editHeaders.map((h,i) => i === 12 ? "Overridden" : `${h}-R4`)
+    ];
+
+    const editsTable = d3.select("#scenario-edits-table");
+    const editsThead = editsTable.select("thead");
+    const editsTbody = editsTable.select("tbody");
+
+    editsThead.append("tr")
+      .selectAll("th")
+      .data(editHeaders)
+      .enter()
+      .append("th")
+      .text(d => d);
+
+    const editRows = editsTbody.selectAll("tr")
+      .data(editValues)
+      .enter()
+      .append("tr");
+
+    editRows.selectAll("td")
+      .data(d => d)
+      .enter()
+      .append("td")
+      .text(d => d);
+
+    const colWidth = 150; // must align with your CSS min-width
+    editsTable.style("width", (editHeaders.length * colWidth) + "px");
+
+    /* --------- Scenario Impact results (different data source) --------- */
+    // Make a separate dataset to show impacted metrics; keep enough columns to allow horizontal scroll if desired.
+    const resultsHeaders = ["Region","Product","Metric","Baseline","Scenario","Delta","Delta %","Flag","Reviewer","Notes"];
+    const resultsValues = [
+      ["EMEA","Widget A","Revenue", "1,000,000","1,025,000","+25,000","+2.5%","Impacted","J. Smith","Price uplift"],
+      ["APAC","Widget B","Units",   "50,000","49,200","-800","-1.6%","Impacted","K. Lee","Demand dip"],
+      ["NA","Widget C","Margin %",  "18.0%","18.7%","+0.7pp","+3.9%","Impacted","A. Patel","Mix change"],
+      ["LATAM","Widget D","COGS",   "420,000","418,500","-1,500","-0.36%","Impacted","M. Rossi","Supplier discount"]
+    ];
+
+    const resultsTable = d3.select("#impact-results-table");
+    const resultsThead = resultsTable.select("thead");
+    const resultsTbody = resultsTable.select("tbody");
+
+    resultsThead.append("tr")
+      .selectAll("th")
+      .data(resultsHeaders)
+      .enter()
+      .append("th")
+      .text(d => d);
+
+    const resultRows = resultsTbody.selectAll("tr")
+      .data(resultsValues)
+      .enter()
+      .append("tr");
+
+    resultRows.selectAll("td")
+      .data(d => d)
+      .enter()
+      .append("td")
+      .text(d => d);
+
+    // Optional: widen table to encourage horizontal scrolling if your CSS min-width forces it
+    resultsTable.style("width", (resultsHeaders.length * colWidth) + "px");
+  </script>
+</body>
+
+</html>
