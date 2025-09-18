@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Spec Check — Headings, Form, Upload Button, Table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    :root{
+      --purple:#662095;    /* your specified “deep purple” */
+      --light-grey:#CCCCCC;
+      --dark-grey:#444444;
+      --black:#000000;
+      --white:#FFFFFF;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 16px;
+      background: #fafafa;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--black);
+    }
+
+    /* Headings become full-width horizontal bars */
+    h1, h2, h3 {
+      display: block;
+      width: 100%;
+      background: var(--light-grey);
+      color: var(--purple);
+      margin: 0 0 12px 0;
+      padding: 5px; /* 5px “margin inside” per your wording */
+      font-weight: 600;
+    }
+    /* “small <h1>” as requested */
+    h1 { font-size: 18px; line-height: 1.2; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 14px; }
+
+    /* Labels (form field names) + table header text */
+    .form-label,
+    table thead th {
+      font-size: 12px;
+      color: var(--dark-grey);
+      font-weight: 600;
+    }
+
+    /* Simple form layout */
+    .field {
+      display: block;
+      margin: 12px 0;
+    }
+    .field select,
+    .field input[type="text"] {
+      display: block;
+      margin-top: 4px;
+      padding: 6px 8px;
+      font-size: 14px;
+      border: 1px solid var(--light-grey);
+      border-radius: 2px;
+      background: #fff;
+      outline: none;
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      border-radius: 2px; /* specifically 2px rounding */
+      padding: 8px 12px;
+      font-size: 14px;
+      line-height: 1;
+      cursor: default; /* no/little interaction */
+      user-select: none;
+    }
+    .btn svg { 
+      width: 16px; 
+      height: 16px; 
+      display: block;
+      flex: 0 0 16px;
+    }
+
+    /* Table container + table look */
+    .table-wrap {
+      background: var(--light-grey); /* light grey table background */
+      padding: 8px;
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: transparent; /* rows will be white; container is light grey */
+    }
+
+    thead th {
+      background: var(--light-grey); /* keep header cells light grey */
+      text-align: left;
+      padding: 8px 10px;
+      border-top: 1px solid var(--light-grey);  /* only top/bottom borders */
+      border-bottom: 1px solid var(--light-grey);
+      border-left: none;
+      border-right: none;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      background: var(--white); /* rows are white */
+      color: var(--black);
+      padding: 8px 10px;
+      border-top: 1px solid var(--light-grey);  /* only top/bottom borders */
+      border-bottom: 1px solid var(--light-grey);
+      border-left: none;
+      border-right: none;
+    }
+
+    /* Simple spacing helpers */
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+	
+	/* Link style override: force blue + underline */
+	a, .link {
+	  color: #0066CC;
+	  text-decoration: underline;
+	}
+	a:hover, .link:hover {
+	  text-decoration: underline; /* keep underline on hover for screenshots */
+	}
+  </style>
+</head>
+
+<body>
+
+  <h1>Override Scenarios</h1>
+
+  <div style="display:flex; align-items:center; margin-top:12px;">
+    <!-- Template Type dropdown -->
+    <div class="field" style="margin:0 12px 0 0;">
+      <label class="form-label" for="template-type">Template Type</label>
+      <select id="template-type" name="template-type">
+        <option>Sparse Matrix Regridded</option>
+      </select>
+    </div>
+
+    <!-- Download button -->
+    <button class="btn" type="button" aria-label="Download" style="margin-left:12px;">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="19" width="18" height="2" fill="white"></rect>
+        <path d="M12 4v14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M8 14l4 4 4-4" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>Download</span>
+    </button>
+
+    <div style="width:200px;"></div>
+
+    <!-- Scenario Name textbox -->
+    <div class="field" style="margin:0 12px 0 0;">
+      <label class="form-label" for="scenario-name">Scenario Name</label>
+      <input type="text" id="scenario-name" name="scenario-name" value="SA overrides 18-09-2025"/>
+    </div>
+
+    <!-- Upload button -->
+    <button class="btn" type="button" aria-label="Upload" style="margin-left:12px;">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="2" fill="white"></rect>
+        <path d="M12 20V6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M8 10l4-4 4 4" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>Upload</span>
+    </button>
+  </div>
+
+  <h3 style="margin-top:24px;">Scenarios List</h3>
+
+  <div class="table-wrap mt-16">
+    <table id="scenarios-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  
+  <!-- D3 v7 (must be before the script below) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+<script>
+  const scenariosData = {
+    headers: [
+      "Snapshot Id",
+      "Template Type",
+      "Scenario Name",
+      "Created Date",
+      "Created By",
+      "Version",
+      "Status",
+      "Next Actions"
+    ],
+    values: [
+      [1,"Sparse Matrix Regridded", "Link['SA overrides 17-09-2025','https:www.google.com']","17-09-2025","Mr Smith","1","Validated","[Button[text='Make Official'],Button[text='Delete']]"]
+    ]
+  };
+
+  const table = d3.select("#scenarios-table");
+  const thead = table.select("thead");
+  const tbody = table.select("tbody");
+
+  // Build headers (if not already built)
+  if (thead.selectAll("tr").empty()) {
+    thead.append("tr")
+      .selectAll("th")
+      .data(scenariosData.headers)
+      .enter()
+      .append("th")
+      .text(d => d);
+  }
+
+  // Build rows
+  const rows = tbody.selectAll("tr")
+    .data(scenariosData.values)
+    .join("tr");
+
+  rows.selectAll("td")
+    .data(d => d)
+    .join("td")
+    .each(function(cell) {
+      const td = d3.select(this);
+
+      // Render one or more Button[...] tokens
+		if (typeof cell === "string" && cell.includes("Button[")) {
+		  // Match all Button[text='...'] occurrences
+		  const matches = [...cell.matchAll(/Button\[text\s*=\s*['"]([^'"]+)['"]\]/gi)];
+		  if (matches.length > 0) {
+			matches.forEach(m => {
+			  const btnText = m[1] || "Button";
+			  td.append("button")
+				.attr("class", "btn")
+				.style("margin", "0 4px")
+				.text(btnText);
+			});
+			return;
+		  }
+		}
+
+      // Render Link['text','url'] tokens (accepts single or double quotes)
+      if (typeof cell === "string" && /^Link\[/i.test(cell)) {
+        const lm = cell.match(/Link\[\s*['"]([^'"]+)['"]\s*,\s*['"]([^'"]+)['"]\s*\]/i);
+        if (lm) {
+          let text = lm[1];
+          let href = lm[2];
+
+          // Normalize scheme if missing "://"
+          if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(href)) {
+            href = "https://" + href.replace(/^https?:?/i, "").replace(/^\/\//, "");
+          }
+
+          td.append("a")
+            .attr("class", "link")
+            .attr("href", href)
+            .attr("target", "_blank")
+            .text(text);
+          return;
+        }
+      }
+
+      // Fallback: plain text
+      td.text(cell);
+    });
+</script>
+
+</body>
+
+
+</html>
