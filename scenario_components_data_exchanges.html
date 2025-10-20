@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>What-if/Override Architecture – Balanced Layout (True Bi-Directional)</title>
+  <style>
+    body { background:#fafbff; font-family: Inter, Segoe UI, Arial, sans-serif; }
+    svg { display:block; margin:20px auto; background:#fff; border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  </style>
+</head>
+<body>
+  <h3 style="text-align:center;">What-if / Override Architecture</h3>
+  <svg width="1450" height="720" viewBox="0 0 1450 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Arrowheads: separate start/end so heads point in opposite directions (half size) -->
+		<marker id="arrow-end" viewBox="0 0 6 6" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+		  <path d="M0,0 L6,3 L0,6 Z" fill="#333"/>
+		</marker>
+
+		<marker id="arrow-start" viewBox="0 0 6 6" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+		  <!-- flipped triangle for start side -->
+		  <path d="M6,0 L0,3 L6,6 Z" fill="#333"/>
+		</marker>
+
+		<marker id="arrow-green-end" viewBox="0 0 6 6" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+		  <path d="M0,0 L6,3 L0,6 Z" fill="#5b8c00"/>
+		</marker>
+
+		<marker id="arrow-green-start" viewBox="0 0 6 6" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+		  <path d="M6,0 L0,3 L6,6 Z" fill="#5b8c00"/>
+		</marker>
+
+
+      <style>
+        .box { fill:#f9fbff; stroke:#8aa1c1; stroke-width:2; rx:10; ry:10; }
+        .title { font-size:14px; font-weight:600; fill:#0b1f44; }
+        .note { font-size:13px; fill:#0b1f44; font-style: italic;}
+        .linktext { font-size:12px; fill:#333; }
+        /* no default markers here; we set marker-start/end per path */
+        .https { stroke:#333; stroke-width:2; fill:none; }
+        .msg { stroke:#5b8c00; stroke-width:2; fill:none; }
+        .legend rect { fill:#fff; stroke:#ccc; }
+        .legend text { font-size:12px; }
+      </style>
+    </defs>
+
+    <!-- === TOP ROW: 1 - 2 - 3 (wider spacing) === -->
+    <g transform="translate(40,60)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="30" text-anchor="middle">1) Market Data UI</text>
+      <text class="note" x="120" y="50" text-anchor="middle">[UI making direct changes]</text>
+    </g>
+    <g transform="translate(560,60)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="42" text-anchor="middle">2) Gateway</text>
+    </g>
+    <g transform="translate(1080,60)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="42" text-anchor="middle">3) LLM (Chat Assistant)</text>
+    </g>
+
+    <!-- === VERTICAL SPINE UNDER GATEWAY === -->
+    <g transform="translate(560,200)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="42" text-anchor="middle">4) MCP Server</text>
+    </g>
+    <g transform="translate(560,340)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="30" text-anchor="middle">5) Market Data Service</text>
+      <text class="note" x="120" y="50" text-anchor="middle">[Service making direct changes]</text>
+    </g>
+    <g transform="translate(560,480)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="30" text-anchor="middle">6) VaR Service</text>
+      <text class="note" x="120" y="50" text-anchor="middle">[Service calculating impact]</text>
+    </g>
+    <g transform="translate(560,620)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="42" text-anchor="middle">7) Scenario/Sign-off Service</text>
+    </g>
+
+    <!-- === BOTTOM LEFT: 8 === -->
+    <g transform="translate(40,620)">
+      <rect class="box" width="240" height="70"/>
+      <text class="title" x="120" y="42" text-anchor="middle">8) Scenario/Sign-off UI</text>
+    </g>
+
+    <!-- === CONNECTORS === -->
+    <!-- 1 ↔ 2 -->
+    <path class="https" d="M280,95 L560,95"
+          marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="420" y="80" text-anchor="middle">chat msgs, edits, auth</text>
+
+    <!-- 2 ↔ 3 -->
+    <path class="https" d="M800,95 L1080,95"
+          marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="940" y="80" text-anchor="middle">prompts / tool calls</text>
+
+    <!-- 2 ↔ 4 -->
+    <path class="https" d="M680,130 L680,200"
+          marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="700" y="170">tool invocations</text>
+
+    <!-- 4 ↔ 5 -->
+    <path class="https" d="M680,270 L680,340"
+          marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="700" y="310">create_scenario / propose_changes / submit</text>
+	
+	<!-- 1 ↔ 5 -->
+    <!-- Straight horizontal bi-directional arrow connecting Market Data UI (x≈280,y≈95) to Market Data Service (x≈560,y≈375) -->
+    <path class="https" 
+          d="M280,130, L560,375"
+          marker-start="url(#arrow-start)" 
+          marker-end="url(#arrow-end)"/>
+    <text class="linktext" 
+          x="320" y="275" 
+          text-anchor="middle">
+      All non-LLM/chat-related data
+    </text>
+
+
+    <!-- 5 → 6 (one-way messaging) -->
+    <path class="msg" d="M680,410 L680,480" marker-end="url(#arrow-green-end)"/>
+    <text class="linktext" x="700" y="435" fill="#5b8c00">ScenarioSubmitted</text>
+    <text class="linktext" x="700" y="465" fill="#5b8c00">SnapshotPromoted</text>
+
+    <!-- 6 → 7 (one-way HTTPS pull) -->
+    <path class="https" d="M680,550 L680,620" marker-start="url(#arrow-start)"/>
+    <text class="linktext" x="690" y="590">GET /scenarios/{id}/impacts</text>
+	
+	<path class="https" d="M800,370 C 920,455 920,555 800,655" marker-end="url(#arrow-end)"/> 
+    <text class="linktext" x="950" y="520" text-anchor="middle" fill="#5b8c00">POST /scenarios</text>
+
+    <!-- 8 ↔ 7 -->
+    <path class="https" d="M280,655 L560,655"
+          marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="420" y="640" text-anchor="middle">scenario view & approvals</text>
+
+    <!-- 7 → 5 (Promote) — SHIFTED LEFT by 120px -->
+    <path class="https" d="M560,620 C500,550 500,480 560,410" marker-end="url(#arrow-end)"/>
+    <text class="linktext" x="320" y="480">GET /scenarios/{id}/datachanges</text>
+    <text class="linktext" x="320" y="505">POST /scenarios/{id}/promote</text>
+
+    <!-- === LEGEND === -->
+    <g class="legend" transform="translate(1050,600)">
+      <rect x="0" y="0" width="320" height="80" rx="8" ry="8"/>
+      <line x1="15" y1="25" x2="85" y2="25" class="https" marker-end="url(#arrow-end)"/>
+      <text x="95" y="30">HTTPS (REST / streaming)</text>
+      <line x1="15" y1="55" x2="85" y2="55" class="msg" marker-end="url(#arrow-green-end)"/>
+      <text x="95" y="60">Messaging (events)</text>
+    </g>
+  </svg>
+</body>
+</html>
