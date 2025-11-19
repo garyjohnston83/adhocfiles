@@ -205,14 +205,116 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Example: Strategic VaR with 2 epics, each 2 stories (4 rows total) -->
-            <!-- Business Area cell spans 4 rows -->
+
+            <!-- Strategic Market Data: 2 epics x 2 stories (4 rows) -->
+            <tr>
+              <td rowspan="4" class="col-business-area">
+                Strategic Market Data
+              </td>
+
+              <td rowspan="2" class="col-epic">
+                Market Data Ingestion Pipeline
+                <span class="subtext">Due: 31/01/2026</span>
+                <span class="subtext">
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="link">Requirements</a>
+                </span>
+              </td>
+
+              <td class="pill-amber">
+                Core feed onboarding
+              </td>
+              <td class="pill-amber"><span class="pill pill-green">Done</span></td>
+              <td class="pill-amber"><span class="pill pill-green">Done</span></td>
+              <td class="pill-amber"><span class="pill pill-amber">In Progress</span></td>
+              <td class="pill-amber">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>5</span> / 8
+                </a>
+              </td class="pill-amber">
+              <td class="pill-amber"><span class="pill pill-amber">In Progress</span></td>
+              <td class="pill-amber">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>2</span> / 6
+                </a>
+              </td>
+            </tr>
+
+            <tr class="pill-amber">
+              <td>
+                Validation &amp; quality checks
+              </td>
+              <td><span class="pill pill-amber">In Progress</span></td>
+              <td><span class="pill pill-amber">In Progress</span></td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 4
+                </a>
+              </td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 3
+                </a>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2" class="col-epic">
+                Single Source Market Data Store
+                <span class="subtext">Due: 30/04/2026</span>
+                <span class="subtext">
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="link">Requirements</a>
+                </span>
+              </td>
+
+              <td class="pill-grey">
+                Normalised pricing view
+              </td>
+              <td class="pill-grey"><span class="pill pill-grey">Not Started</span></td>
+              <td class="pill-grey"><span class="pill pill-grey">Not Started</span></td>
+              <td class="pill-grey"><span class="pill pill-grey">Not Started</span></td>
+              <td class="pill-grey">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 5
+                </a>
+              </td>
+              <td class="pill-grey"><span class="pill pill-grey">Not Started</span></td>
+              <td class="pill-grey">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 4
+                </a>
+              </td>
+            </tr>
+
+            <tr class="pill-grey">
+              <td>
+                Consumer integration APIs
+              </td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 3
+                </a>
+              </td>
+              <td><span class="pill pill-grey">Not Started</span></td>
+              <td>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="link">
+                  <span>0</span> / 3
+                </a>
+              </td>
+            </tr>
+
+            <!-- Example: Strategic VaR with 2 epics, each 3 stories (5 rows total) -->
+            <!-- Business Area cell spans 5 rows -->
             <tr>
               <td rowspan="5" class="col-business-area">
                 Strategic VaR
               </td>
 
-              <!-- Epic 1 spans 2 rows -->
+              <!-- Epic 1 spans 3 rows -->
               <td rowspan="3" class="col-epic">
                 VaR Scenario Explorer
                 <span class="subtext">Due: 13/12/2025</span>
@@ -220,7 +322,7 @@
               </td>
 
               <td class="pill-green">
-                <span >Scenario grid v1</span>
+                <span>Scenario grid v1</span>
               </td>
               <td class="pill-green"><span class="pill pill-green">Done</span></td>
               <td class="pill-green"><span class="pill pill-green">Done</span></td>
@@ -257,8 +359,8 @@
                 </a>
               </td>
             </tr>
-			
-			<tr class="pill-amber">
+
+            <tr class="pill-amber">
               <td class="pill-amber">
                 Ad-hoc
               </td>
@@ -304,7 +406,7 @@
               </td>
             </tr>
 
-            <tr  class="pill-grey">
+            <tr class="pill-grey">
               <td>
                 Status indicators
               </td>
@@ -328,7 +430,6 @@
             <tr>
               <td rowspan="3" class="col-business-area">
                 Regulatory
-                <span class="subtext">Capital rules</span>
               </td>
               <td rowspan="3" class="col-epic">
                 FRTB Backtesting Dashboard
